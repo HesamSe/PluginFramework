@@ -1,0 +1,85 @@
+{
+  "name": "host-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/host-app/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "compiler": "babel",
+        "outputPath": "dist/apps/host-app",
+        "index": "apps/host-app/src/index.html",
+        "baseHref": "/",
+        "main": "apps/host-app/src/main.ts",
+        "tsConfig": "apps/host-app/tsconfig.app.json",
+        "assets": ["apps/host-app/src/favicon.ico", "apps/host-app/src/assets"],
+        "styles": ["apps/host-app/src/styles.tailwind"],
+        "scripts": [],
+        "webpackConfig": "apps/host-app/webpack.config.ts",
+        "postcssConfig": "apps/host-app/postcss.config.js"
+      },
+      "configurations": {
+        "development": {
+          "extractLicenses": false,
+          "optimization": false,
+          "sourceMap": true,
+          "vendorChunk": true
+        },
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/host-app/src/environments/environment.ts",
+              "with": "apps/host-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "webpackConfig": "apps/host-app/webpack.config.prod.ts"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/react:module-federation-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "host-app:build",
+        "hmr": true,
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "host-app:build:development"
+        },
+        "production": {
+          "buildTarget": "host-app:build:production",
+          "hmr": false
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "defaultConfiguration": "production",
+      "options": {
+        "buildTarget": "host-app:build",
+        "watch": false,
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "host-app:build:development"
+        },
+        "production": {
+          "buildTarget": "host-app:build:production"
+        }
+      }
+    }
+  }
+}
