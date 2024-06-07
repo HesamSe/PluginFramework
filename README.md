@@ -27,7 +27,7 @@ npx nx <target> <project> <...options>
 ```
 
 You can also run multiple targets:
-
+ 
 ```
 npx nx run-many -t <target1> <target2>
 ```
