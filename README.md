@@ -19,7 +19,7 @@ Run `npx nx dev plugin-system` to start the development server. Happy coding!
 Run `npx nx build plugin-system` to build the application. The build artifacts are stored in the output directory (e.g. `dist/` or `build/`), ready to be deployed.
 
 ## Running tasks
-
+ 
 To execute tasks with Nx use the following syntax:
 
 ```
